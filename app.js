@@ -93,7 +93,7 @@ const conditionsList = {
 const callWeatherApi = async (query) => {
 
     const response = await fetch(
-        `http://api.weatherapi.com/v1/forecast.json?key=8e55e19e30cf401c9c953943233005&q=${query}&days=3&aqi=no&alerts=no`
+        `https://api.weatherapi.com/v1/forecast.json?key=8e55e19e30cf401c9c953943233005&q=${query}&days=3&aqi=no&alerts=no`
     );
     return response.json();
 
