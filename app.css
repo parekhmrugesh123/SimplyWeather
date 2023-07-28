@@ -1,0 +1,200 @@
+body {
+    background: linear-gradient(#6fdff6, #9198e5);
+    background-attachment: fixed;
+
+    /* background: linear-gradient(45deg, #5db5f0, #868eef, #ee8989);
+    background-size: 400% 400%;
+    animation: gradient 5s ease infinite; */
+
+    /* height: calc(100vh-100px); */
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* welcome box */
+#welcome {
+    display: block;
+    max-width: 80%;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    margin: 80px auto;
+    padding: 30px;
+    border-radius: 30px;
+    backdrop-filter: invert(15%);
+}
+
+.card {
+    margin: 50px auto;
+    text-align: center;
+    max-width: 35%;
+    background: none;
+    border: none;
+    border-radius: 30px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    backdrop-filter: invert(10%);
+}
+
+#city-search {
+    max-width: 95%;
+    display: flex;
+    align-self: center;
+    justify-content: space-evenly;
+}
+
+#city-search input {
+    max-width: 75%;
+    padding: 15px 25px;
+    border-radius: 30px;
+}
+
+#city-search button {
+    width: 55px;
+    border-radius: 75px;
+    cursor: pointer;
+}
+
+.tab-group {
+    display: none;
+    justify-content: space-evenly;
+    margin: 15px 5px;
+}
+
+.tabs {
+    display: inline;
+    color: rgba(239, 244, 240, 0.792);
+    cursor: pointer;
+}
+
+.tab-active {
+    border-bottom: 2px white solid;
+    color: white;
+}
+
+/* error message */
+#error {
+    display: none;
+    margin: 50px;
+}
+
+#error h4 {
+    margin: 50px 5px 5px 5px;
+    padding: 0;
+}
+
+#weather-data {
+    display: none;
+}
+
+#icon {
+    margin-top: 40px;
+    font-size: 8em;
+    color: white;
+}
+
+#weather h1 {
+    font-size: 4.5em;
+}
+
+#city-name {
+    margin: 20px;
+    font-size: 1.5em;
+}
+
+.details {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.detail-column .detail-value {
+    font-size: 1.7em;
+}
+
+.detail-column .detail-type {
+    font-size: 1.1em;
+}
+
+#forecast {
+    margin: 10px 20px;
+    display: none;
+}
+
+.forecast-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 99%;
+    margin: 22px auto;
+    padding: 30px 2px;
+    border: 1px solid white;
+    border-radius: 25px;
+}
+
+.forecast-day,
+.forecast-date {
+    font-size: 15px;
+}
+
+.forecast-temp {
+    font-size: 25px;
+}
+
+#forecast-condition {
+    font-size: 40px;
+}
+
+.forecast-precip-icon {
+    font-size: 20px;
+}
+
+
+@media (max-width: 1200px) {
+    .card {
+        max-width: 45%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .card {
+        max-width: 55%;
+    }
+}
+
+@media (max-width: 767px) {
+    .card {
+        display: flex;
+        justify-content: flex-start;
+        height: 100vh;
+        /* min-height: calc(100vh - 1px); */
+        margin: auto;
+        max-width: 98%;
+        border-radius: 0%;
+    }
+
+    #forecast {
+        /* height: 100vh; */
+        margin: 2.5rem 20px;
+    }
+
+    #weather-data {
+        margin: 2rem 1rem;
+    }
+
+    .details {
+        gap: 1.5rem;
+    }
+}
