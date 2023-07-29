@@ -118,11 +118,15 @@ const displayForecastData = (jsonData) => {
 
     forecastCity.text(`${jsonData.location.name}, ${jsonData.location.region}`);
 
+    const shortDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
     jsonData.forecast.forecastday.forEach((forecast, i) => {
         const dateObj = new Date(forecast.date);
-        const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "short" });
+        const dayOfWeekNum = dateObj.getUTCDay();
+        const dayOfWeekShort = shortDayNames[dayOfWeekNum];
         const date = dateObj.getUTCDate().toString();
-        forecastDay.eq(i).text(dayOfWeek);
+
+        forecastDay.eq(i).text(dayOfWeekShort);
         forecastDate.eq(i).text(date);
         maxTemp.eq(i).text(`${forecast.day.maxtemp_f.toFixed(0)}°F`);
         minTemp.eq(i).text(`${forecast.day.mintemp_f.toFixed(0)}°F`);
@@ -135,7 +139,6 @@ const displayForecastData = (jsonData) => {
 };
 
 const displayData = (isForecastTab) => {
-
     if (isForecastTab) {
         displayForecastData(jsonData);
         forecastContainer.slideDown();
