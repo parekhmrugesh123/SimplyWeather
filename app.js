@@ -27,6 +27,7 @@ const forecastPrecip = $(".forecast-precip");
 
 let jsonData;
 
+
 const commonConditions = {
     Cloudy: "bi-clouds-fill",
     Overcast: "bi-clouds-fill",
@@ -99,6 +100,16 @@ const callWeatherApi = async (query) => {
 
 }
 
+
+const callAutoCompleteApi = async (query) => {
+
+    const response = await fetch(
+        `https://api.weatherapi.com/v1/search.json?key=8e55e19e30cf401c9c953943233005&q=${query}`
+    );
+    return response.json();
+
+}
+
 const displayWeatherData = (jsonData) => {
 
     temperature.text(jsonData.current.temp_f.toFixed(0));
@@ -118,11 +129,15 @@ const displayForecastData = (jsonData) => {
 
     forecastCity.text(`${jsonData.location.name}, ${jsonData.location.region}`);
 
+    const shortDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
     jsonData.forecast.forecastday.forEach((forecast, i) => {
         const dateObj = new Date(forecast.date);
-        const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "short" });
+        const dayOfWeekNum = dateObj.getUTCDay();
+        const dayOfWeekShort = shortDayNames[dayOfWeekNum];
         const date = dateObj.getUTCDate().toString();
-        forecastDay.eq(i).text(dayOfWeek);
+
+        forecastDay.eq(i).text(dayOfWeekShort);
         forecastDate.eq(i).text(date);
         maxTemp.eq(i).text(`${forecast.day.maxtemp_f.toFixed(0)}°F`);
         minTemp.eq(i).text(`${forecast.day.mintemp_f.toFixed(0)}°F`);
@@ -134,8 +149,8 @@ const displayForecastData = (jsonData) => {
 
 };
 
-const displayData = (isForecastTab) => {
 
+const displayData = (isForecastTab) => {
     if (isForecastTab) {
         displayForecastData(jsonData);
         forecastContainer.slideDown();
@@ -148,6 +163,7 @@ const displayData = (isForecastTab) => {
     errorMessage.hide();
 
 };
+
 
 const handleWeatherError = () => {
 
@@ -162,13 +178,13 @@ const handleWeatherError = () => {
 const searchWeather = async (e) => {
 
     e.preventDefault();
+
     const query = searchBar.val();
 
     if (!query) return;
 
     try {
         jsonData = await callWeatherApi(query);
-        console.log(jsonData);
         const activeTabIndex = tabs.index($(".tab-active"));
         if (activeTabIndex === 1) {
             tabs.eq(0).click();
@@ -205,6 +221,24 @@ tabs.on("click", function () {
     const isForecastTab = $(this).index() === 1;
     tabs.removeClass("tab-active").eq(isForecastTab ? 1 : 0).addClass("tab-active");
     displayData(isForecastTab);
+
+});
+
+
+searchBar.autocomplete({
+
+    source: async function (request, response) {
+        const query = request.term;
+        const autoCompleteData = await callAutoCompleteApi(query);
+        console.log(autoCompleteData);
+        const suggestions = autoCompleteData.map((item) => `${item.name}, ${item.region}`);
+        response(suggestions);
+    },
+    messages: {},
+    select: function (event, ui) {
+        searchBar.val(ui.item.value);
+        searchWeather(event);
+    },
 
 });
 
